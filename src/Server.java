@@ -22,10 +22,7 @@ public class Server {
         BufferedReader in = new BufferedReader (new InputStreamReader(client.getInputStream()));
         String request = in.readLine();
 
-        if(request.equals("bye"))
-            System.out.println("Recu");
-
-
-
+        FtpRequest handler = new FtpRequest();
+        handler.processRequest(request);
     }
 }

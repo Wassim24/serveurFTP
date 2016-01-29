@@ -18,7 +18,7 @@ public class Client {
             socket = new Socket(InetAddress.getLocalHost(),1050);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream());
-            out.println("bye");
+            out.println("QUIT wassim");
             out.flush();
 
             socket.close();
