@@ -6,23 +6,57 @@ import java.net.Socket;
 
 public class Server {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         /** Le serveur ecoute sur le port 1024 **/
-        ServerSocket server = new ServerSocket(1050);
-        System.out.println("Le serveur a démarré et écoute sur 1050");
+        ServerSocket server;
+
+        try {
+
+            server = new ServerSocket(1050);
+            Thread serverThread = new Thread(new AcceptClients(server));
+            serverThread.start();
+
+        } catch (IOException e) {e.printStackTrace();}
+
+    }
+}
+
+class AcceptClients implements Runnable {
+
+    private ServerSocket server;
+    private Socket client;
+    private int nbClients = 0;
+
+    public AcceptClients(ServerSocket server) {
+        this.server = server;
+    }
+
+    @Override
+    public void run() {
+
+        while (true) {
+
+            /** Le serveur attend de recevoir une connexion et l'accepte **/
+            System.out.println("Le serveur attend une connexion...");
+            try {
+
+                client = server.accept();
+                nbClients++;
 
 
-        /** Le serveur attend de recevoir une connexion et l'accepte **/
-        System.out.println("Le serveur attend une connexion...");
-        Socket client = server.accept();
+                /**  Connexion d'un client, réception de la requete, et traitements **/
+                System.out.println("Le nombre de clients : " + nbClients);
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                String request = in.readLine();
 
-        /**  Connexion d'un client, réception de la requete, et traitements **/
-        System.out.println("Un client s'est connecté");
-        BufferedReader in = new BufferedReader (new InputStreamReader(client.getInputStream()));
-        String request = in.readLine();
+                FtpRequest handler = new FtpRequest();
+                handler.processRequest(request);
 
-        FtpRequest handler = new FtpRequest();
-        handler.processRequest(request);
+            } catch (IOException e) { e.printStackTrace(); }
+
+        }
+
+
     }
 }

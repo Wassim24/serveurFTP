@@ -21,7 +21,6 @@ public class Client {
             out.println("QUIT wassim");
             out.flush();
 
-            socket.close();
 
         }catch (UnknownHostException e) {
 

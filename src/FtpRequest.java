@@ -28,42 +28,30 @@ public class FtpRequest {
 
     private String processUSER (String request){
 
-        System.out.println("processUSER");
-
         return "TRUE";
     }
 
     private String processPASS (String request){
-
-        System.out.println("processPASS");
 
         return "TRUE";
     }
 
     private String processRETR (String request){
 
-        System.out.println("processRETR");
-
         return "TRUE";
     }
 
     private String processSTOR (String request){
-
-        System.out.println("processSTOR");
 
         return "TRUE";
     }
 
     private String processLIST (String request){
 
-        System.out.println("processLIST");
-
         return "TRUE";
     }
 
     private String processQUIT (String request){
-
-        System.out.println("processQUIT");
 
         return "TRUE";
     }
