@@ -1,5 +1,3 @@
-import java.io.PrintWriter;
-
 public class FtpRequest {
 
     public FtpRequest() {}
@@ -9,6 +7,7 @@ public class FtpRequest {
         String command = request.substring(0, 4);
 
         switch (command) {
+
             case "USER" : processUSER(request);
                 break;
             case "PASS" : processPASS(request);
@@ -21,9 +20,9 @@ public class FtpRequest {
                 break;
             case "QUIT" : processQUIT(request);
                 break;
+
             default: break;
         }
-
     }
 
     private String processUSER (String request){
