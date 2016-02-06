@@ -1,11 +1,9 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.util.HashMap;
 
 public class Client {
 
@@ -18,17 +16,11 @@ public class Client {
             socket = new Socket(InetAddress.getLocalHost(),1050);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream());
-            out.println("QUIT wassim");
+            out.println("LIST");
             out.flush();
 
 
-        }catch (UnknownHostException e) {
-
-            e.printStackTrace();
-        }catch (IOException e) {
-
-            e.printStackTrace();
-        }
+        } catch (IOException e) {e.printStackTrace();}
     }
 
 }
