@@ -20,7 +20,7 @@ public class FtpRequest implements Runnable{
     private Socket dataSocket;
     private boolean auth;
     private boolean finishedCom;
-    private String adress;
+    private String address;
     private int port;
     private boolean passive;
     private ServerSocket passiveMode;
@@ -32,14 +32,14 @@ public class FtpRequest implements Runnable{
         this.socket = socket;
         this.auth = false;
         this.finishedCom = false;
-        this.adress = this.socket.getLocalAddress().getHostAddress();
+        this.address = this.socket.getLocalAddress().getHostAddress();
         this.port = 1050;
 
         try {
 
             this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.out = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()), true);
-            this.out.println("220 Connection established, login please.");
+            this.out.println("220 Connection established on 1050, login please.");
 
         } catch (IOException e) {e.printStackTrace();}
 
@@ -176,7 +176,7 @@ public class FtpRequest implements Runnable{
             if(this.passive)
                 this.dataSocket = this.passiveMode.accept();
             else
-                this.dataSocket = new Socket(InetAddress.getByName(this.adress), this.port);
+                this.dataSocket = new Socket(InetAddress.getByName(this.address), this.port);
 
             this.dataIn = new DataInputStream(this.dataSocket.getInputStream());
             this.dataOut = new DataOutputStream(this.dataSocket.getOutputStream());
@@ -219,7 +219,7 @@ public class FtpRequest implements Runnable{
             if (this.auth) {
                 byte[] dataArray = Files.readAllBytes(fileToTransfer.resolve(this.data));
 
-                this.dataSocket = new Socket(InetAddress.getByName(this.adress), this.port);
+                this.dataSocket = new Socket(InetAddress.getByName(this.address), this.port);
 
                 this.dataIn = new DataInputStream(this.dataSocket.getInputStream());
                 this.dataOut = new DataOutputStream(this.dataSocket.getOutputStream());
@@ -245,7 +245,7 @@ public class FtpRequest implements Runnable{
         try {
             if (this.auth) {
 
-                this.dataSocket = new Socket(InetAddress.getByName(this.adress), this.port);
+                this.dataSocket = new Socket(InetAddress.getByName(this.address), this.port);
 
                 this.dataIn = new DataInputStream(this.dataSocket.getInputStream());
                 this.dataOut = new DataOutputStream(this.dataSocket.getOutputStream());
@@ -281,7 +281,7 @@ public class FtpRequest implements Runnable{
 
         String newHostPort[] = this.data.split(",");
 
-        this.adress = newHostPort[0] + "." + newHostPort[1] + "." + newHostPort[2] + "." + newHostPort[3];
+        this.address = newHostPort[0] + "." + newHostPort[1] + "." + newHostPort[2] + "." + newHostPort[3];
         this.port = Integer.parseInt(newHostPort[4]) * 256 + Integer.parseInt(newHostPort[5]);
 
         this.passive = false;
