@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 
 public class FtpRequest implements Runnable{
 
@@ -50,11 +51,9 @@ public class FtpRequest implements Runnable{
 
     public void processRequest(){
 
-        String request;
-
         try {
 
-            while((request = this.in.readLine()) != null) {
+            for (String request = this.in.readLine(); request != null; request = this.in.readLine()) {
 
                 if (request.split(" ").length > 1) {
                     this.command = request.split(" ")[0];
@@ -63,8 +62,6 @@ public class FtpRequest implements Runnable{
                     this.command = request.split(" ")[0];
                     this.data = "";
                 }
-
-                System.out.println(command + " " + data);
 
                 switch (command) {
 
@@ -194,6 +191,7 @@ public class FtpRequest implements Runnable{
 
                     this.dataOut.writeBytes(currentFile);
                     this.dataOut.flush();
+                    currentFile = "";
                 }
 
                 this.dataSocket.close();
